@@ -17,20 +17,24 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
     public User addUser(UserDto userDto) {
         User user = new User(
-                userDto.getUserId(),
-                userDto.getUserName(),
+
                 userDto.getEmail(),
-                this.passwordEncoder.encode(userDto.getPassword())
+                this.passwordEncoder.encode(userDto.getPassword()),
+                userDto.getFirstName(),
+                userDto.getLastName(),
+                userDto.getLocation(),
+                userDto.getMobile(),
+                userDto.getAge()
+
         );
-        userRepository.save(user);
-        return user;
+       return userRepository.save(user);
+
     }
 
     @Override
@@ -66,13 +70,11 @@ public class UserServiceImpl implements UserService {
                     Boolean isPwRight = passwordEncoder.matches(password, encodePassword);
 
                     return isPwRight && userRepository.findUserByEmailAndPassword(loginDto.getEmail(), encodePassword).isPresent()
-                            ? new LoginResponse("Login Success", true)
+                            ? new LoginResponse("Login Success", true,existingUser.getFirstName(),existingUser.getLastName())
                             : new LoginResponse(isPwRight ? "Login failed" : "Password Not Matched", false);
                 })
                 .orElse(new LoginResponse("Email does not exist", false));
     }
-
-
 }
 
 

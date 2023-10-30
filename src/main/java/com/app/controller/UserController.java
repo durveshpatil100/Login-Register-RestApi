@@ -5,6 +5,7 @@ import com.app.dto.UserDto;
 import com.app.entity.User;
 import com.app.response.LoginResponse;
 import com.app.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +19,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/save")
-    public ResponseEntity<User> saveUser(@RequestBody UserDto userDto)
+    public ResponseEntity<?> saveUser(@RequestBody @Valid UserDto userDto)
     {
-       User user = userService.addUser(userDto);
-        return new ResponseEntity<User>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.addUser(userDto),HttpStatus.CREATED);
     }
 
     @GetMapping("/login")

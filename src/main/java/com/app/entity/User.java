@@ -1,14 +1,15 @@
 package com.app.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@Table(name="users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
 
     @Id
@@ -16,15 +17,37 @@ public class User {
     @Column(name="user_id")
     private Integer userId;
 
-    @Column(name="name")
-    private String userName;
 
-    @Column(name="email")
-    private String email;
+    @Column(name="email", unique = true)
+
+    private String email;    //no duplicates req
 
     @Column(name="password")
     private String password;
 
+    //all details req. first and last name
 
+    private String firstName;
 
+    private String lastName;
+
+    private String location;
+
+    @Column(name="mobile", unique = true)
+    private String mobile;
+
+    private int age;
+
+    public User(String email, String password, String firstName, String lastName, String location, String mobile, int age) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.location = location;
+        this.mobile = mobile;
+        this.age = age;
+    }
+
+    public User(String firstName, String lastName, String email, String mobile, String location, int age, String password) {
+    }
 }
