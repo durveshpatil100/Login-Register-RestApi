@@ -6,23 +6,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Data
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @NoArgsConstructor
-@Table(name="users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="user_id")
+    @Column(name = "user_id")
     private Integer userId;
 
 
-    @Column(name="email", unique = true)
+    @Column(name = "email", unique = true)
 
     private String email;    //no duplicates req
 
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
 
     //all details req. first and last name
@@ -33,10 +36,12 @@ public class User {
 
     private String location;
 
-    @Column(name="mobile", unique = true)
+    @Column(name = "mobile", unique = true)
     private String mobile;
 
     private int age;
+
+    private String role="user";
 
     public User(String email, String password, String firstName, String lastName, String location, String mobile, int age) {
         this.email = email;
@@ -46,8 +51,12 @@ public class User {
         this.location = location;
         this.mobile = mobile;
         this.age = age;
+
     }
 
-    public User(String firstName, String lastName, String email, String mobile, String location, int age, String password) {
+    public User(String firstName, String lastName, String email, String mobile, String location, int age, String password,String role) {
     }
+
+
+
 }

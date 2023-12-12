@@ -13,6 +13,7 @@ public class LoginResponse {
     Boolean status;
     String firstName;
     String lastName;
+    String role;
 
 
     public LoginResponse(String message, Boolean status) {
@@ -25,5 +26,13 @@ public class LoginResponse {
         this.status = status;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public LoginResponse(String message, Boolean status, String firstName, String lastName,String role) {
+        this.message = message;
+        this.status = status;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
     }
 }

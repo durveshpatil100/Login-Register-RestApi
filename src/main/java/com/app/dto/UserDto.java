@@ -31,9 +31,11 @@ public class UserDto {
     @Pattern(regexp = "^\\d{10}$",message = "invalid mobile number entered ")
     private String mobile;
 
-    @Min(18)
+    @Min(15)
     @Max(60)
     private int age;
+
+    private String role;
 
 
 }
