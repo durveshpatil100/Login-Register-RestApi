@@ -43,6 +43,9 @@ public class User {
 
     private String role="user";
 
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
     public User(String email, String password, String firstName, String lastName, String location, String mobile, int age) {
         this.email = email;
         this.password = password;

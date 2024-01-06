@@ -1,5 +1,6 @@
 package com.app.dto;
 
+import com.app.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,6 @@ public class BookDto {
     private String bookImage;
 
     private String bookDescription;
+
+    private CategoryDto category;
 }

@@ -1,6 +1,7 @@
 package com.app.exceptionHandler;
 
 import com.app.exception.DuplicateEmailException;
+import com.app.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,4 +31,12 @@ public class ApplicationExceptionHandler {
         errorMap.put("errorMessage", ex.getMessage());
         return errorMap;
     }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public Map<String, String> handleResourceException(ResourceNotFoundException ex) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("errorMessage", ex.getMessage());
+        return errorMap;
+    }
+
 }

@@ -34,6 +34,7 @@ public class Book {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public Book(String bookName, String bookImage, String authorName, double bookPrice, String bookDescription, Date publishingDate) {
+
+    public Book(String bookName, String bookImage, String authorName, double bookPrice, String bookDescription, Date publishingDate, Category category) {
     }
 }

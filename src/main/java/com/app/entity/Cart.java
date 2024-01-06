@@ -5,24 +5,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
+public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int categoryId;
+    private int cartId;
 
-    private String categoryName;
+    @OneToMany
+    private Set<CartItem> items = new HashSet<>();
 
-    @OneToMany(mappedBy = "category" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Book> book;
-
-    public Category(String categoryName) {
-    }
-
+    @OneToOne
+    private User user;
 }
