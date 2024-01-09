@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
             if (isPwRight) {
                 Optional<User> user = userRepository.findUserByEmailAndPassword(loginDto.getEmail(), encodePassword);
                 if (user.isPresent()) {
-                    return new LoginResponse("Login Success", true, existingUser.getFirstName(), existingUser.getLastName(), existingUser.getRole());
+                    return new LoginResponse("Login Success", true, existingUser.getFirstName(), existingUser.getLastName());
                 } else {
                     return new LoginResponse("Login failed", false);
                 }

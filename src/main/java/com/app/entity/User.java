@@ -5,15 +5,20 @@ import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @NoArgsConstructor
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,11 +26,10 @@ public class User {
     private Integer userId;
 
 
-    @Column(name = "email", unique = true)
-
+    @Column(name = "email", unique = true, nullable = false)
     private String email;    //no duplicates req
 
-    @Column(name = "password")
+    @Column(name = "password",nullable = false)
     private String password;
 
     //all details req. first and last name
@@ -41,7 +45,8 @@ public class User {
 
     private int age;
 
-    private String role="user";
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<Roles> roles = new HashSet<>();
 
     @OneToOne(mappedBy = "user")
     private Cart cart;
@@ -61,5 +66,34 @@ public class User {
     }
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<SimpleGrantedAuthority> collect = roles.stream().map(r -> new SimpleGrantedAuthority(r.getRoleName())).collect(Collectors.toSet());
+        return collect;
+    }
 
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
